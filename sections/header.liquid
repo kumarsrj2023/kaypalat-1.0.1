@@ -1,0 +1,123 @@
+{% assign main_menu_link_lists = linklists[section.settings.menu].links %}
+
+<div class="header-wrapper relative" x-data="{mobileMenuOpen: false }">
+  <header class="top-0 left-0 w-full">
+    <div class="top-bar bg-white py-5 px-5 flex justify-between items-center">
+      <div class="menu-icon lg:hidden md:block">
+        <button
+          @click="mobileMenuOpen = !mobileMenuOpen"
+          type="button"
+          class="bg-white p-2 inline-flex items-center justify-center focus:outline-none"
+        >
+          {% render 'icon-menu-bar', fill: '#000' %}
+        </button>
+      </div>
+      <div class="site-logo w-36">
+        <a href="">
+          <img src="{{ 'logo.png' | asset_url }}" alt="Logo" width="100%" height="100%">
+        </a>
+      </div>
+
+      <div class="hidden search-bar lg:flex w-full px-10">
+        <input
+          class="w-full bg-[#fafafa] text-sm rounded py-3 px-4 outline-none"
+          type="text"
+          name="text"
+          id="serach_bar"
+        >
+        <button class="bg-[#9670B0] w-12 text-white flex justify-center items-center rounded" type="submit">
+          {% render 'icon-search', fill: '#9670B0', class: 'w-5 h-5 text-center' %}
+        </button>
+      </div>
+
+      <div class="flex items-center justify-between gap-3">
+        <div class="all-account text-center flex flex-col items-center">
+          {% render 'icon-user', class: 'w-5 h-5 text-center' %}
+          <span class="block text-sm uppercase">Account</span>
+        </div>
+        <div class="all-account text-center flex flex-col items-center">
+          {% render 'icon-heart', class: 'w-5 h-5 text-center' %}
+          <span class="block text-sm uppercase">Wishlist</span>
+        </div>
+        <div class="all-account text-center flex flex-col items-center">
+          {% render 'icon-cart', class: 'w-5 h-5 text-center' %}
+          <span class="block text-sm uppercase">Cart</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:hidden search-bar flex w-full px-10">
+      <input class="w-full bg-[#fafafa] text-sm rounded py-3 px-4 outline-none" type="text" name="text" id="serach_bar">
+      <button class="bg-[#9670B0] w-12 text-white flex justify-center items-center rounded" type="submit">
+        {% render 'icon-search', fill: '#9670B0', class: 'w-5 h-5 text-center' %}
+      </button>
+    </div>
+
+    <!-- NAVIGATION MENU -->
+    <nav class="hidden md:flex justify-center items-center space-x-10 bg-[#F5F5F5] py-3 shadow">
+      {% for item in main_menu_link_lists %}
+        {% if item.links == blank %}
+          <div class="relative">
+            <a
+              href="{{ item.url }}"
+              class="text-gray-900 font-medium text-sm hover:text-[#35A4DD] {% if item.active %}active text-[#35A4DD]{% endif %}"
+            >
+              {{- item.title -}}
+            </a>
+          </div>
+        {% else %}
+          <div class="relative" x-data="{ open: false }">
+            <button
+              @click="open = !open"
+              type="button"
+              class="inline-flex items-center text-base text-gray-500 hover:text-gray-900"
+            >
+              {{ item.title }}
+              {% render 'icon-dropdown', class: 'w-5 h-5 ms-1' %}
+            </button>
+
+            <div
+              @click.away="open = false"
+              x-show="open"
+              class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2"
+            >
+              <div class="shadow-lg border ring-black ring-opacity-5 overflow-hidden rounded-lg">
+                <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                  {% for childLink in item.links %}
+                    <a href="{{ childLink.url }}" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-100">
+                      <div class="ml-4">
+                        <p class="text-gray-900 text-base font-medium">{{ childLink.title }}</p>
+                      </div>
+                    </a>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </nav>
+    {% comment %} for mobile {% endcomment %}
+  </header>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "mobile_menu_title",
+      "label": "Mobile Menu Title",
+      "default": "Menu",
+      "info": "This is the Mobile Menu Title"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Header Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,22 @@
+{% comment %} 
+* it is supprot class you can pass the custom class 
+{% endcomment %}
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  {% if fill %}
+    fill="{{ fill }}"
+    {% else %}
+      fill="#000"
+  {% endif %}
+  viewBox="0 0 24 24"
+  stroke-width="1.5"
+  stroke="currentColor"
+  {% if class %}
+    class="{{ class }}"
+    {% else %}
+    class="w-6 h-6"
+  {% endif %}
+>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+</svg>

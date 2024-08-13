@@ -11,10 +11,14 @@
     <!-- Header hook for plugins -->
     {{ 'application.css' | asset_url | stylesheet_tag }}
     {{ 'application.js' | asset_url | script_tag }}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
   <body>
     <main role="main">
-      {{ content_for_layout }}
+      {% section 'announcement-bar' %}
+      {% section 'header' %}
+        {{ content_for_layout }}
+      {% section 'footer' %}
     </main>
   </body>
 </html>
