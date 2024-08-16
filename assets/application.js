@@ -4,3 +4,4 @@ window.addEventListener("alpine:init", () => {
         sideBar: false,
     });
 });
+

@@ -1,0 +1,69 @@
+<div class="top-category overflow-hidden bg-[#FBF5ED] p-10">
+  <div class="mb-10">
+    <h2 class="text-center text-2xl font-semibold mb-10">{{ section.settings.title }}</h2>
+  </div>
+
+  <div class="swiper-top-category overflow-hidden">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        {% assign collection = collections[block.settings.collection] %}
+          <div class="swiper-slide">
+            <div class="group collection-wrapper text-center overflow-hidden">
+              {% if collection.featured_image %}
+                {% assign collection_image = collection.featured_image %}
+              {% else %}
+                {% assign collection_image = collection.products.first.featured_image %}
+              {% endif %}
+
+              <a class="inline-block" href="{{ collection.url }}">
+                <div class="w-40 h-40 mb-4 mx-auto overflow-hidden rounded-full">
+                  <img
+                    class="object-cover w-full h-full rounded-full transform transition-transform duration-1000 ease-in-out group-hover:scale-110"
+                    src="{{ collection_image | img_url: 'medium' }}"
+                    alt="{{ collection.title }}"
+                    width=""
+                    height=""
+                  >
+                </div>
+                <p class="text-base text-center font-medium">{{ collection.title }}</p>
+              </a>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Top Categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Explore Top Categories"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top Categories",
+      "category": "Collections"
+    }
+  ]
+}
+{% endschema %}

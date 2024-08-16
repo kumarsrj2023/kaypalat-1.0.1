@@ -1,0 +1,119 @@
+<div class="best-sellers overflow-hidden bg-[#FBF5ED] py-10 px-5">
+  <div class="mb-10 text-center">
+    <h2 class="text-26 font-semibold mb-2">{{ section.settings.title }}</h2>
+    <p class="text-sm font-normal">{{ section.settings.description }}</p>
+  </div>
+
+  {% if section.settings.display_type == 'grid' %}
+    <div
+      x-data="{ open: false, quantity: 1, selectedProduct: null }"
+      class="product-list grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-10"
+    >
+      {% if collections[section.settings.collection].products.size > 0 %}
+        {% for product in collections[section.settings.collection].products limit: section.settings.item_per_page %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      {% else %}
+        <p class="text-center w-full">No products found in this collection.</p>
+      {% endif %}
+    </div>
+    <div class="text-center mt-10">
+      <a
+        href="{{ collections[section.settings.collection].url }}"
+        class="inline-block capitalize py-3 px-12 text-white bg-custom-pink hover:bg-[#a38cc9] rounded font-medium transition-all duration-700"
+        >Shop More</a
+      >
+    </div>
+
+  {% else %}
+  <div
+    x-data="{ open: false, quantity: 1, selectedProduct: null }"
+    class="product-list relative overflow-hidden transition-all duration-700"
+    >
+    <!-- Swiper Container -->
+    <div class="swp-beauty-care">
+      <div class="swiper-wrapper">
+        {% if collections[section.settings.collection].products.size > 0 %}
+          {% for product in collections[section.settings.collection].products limit: section.settings.item_per_page %}
+            <div class="swiper-slide">
+              {% render 'product-card', product: product %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-center w-full">No products found in this collection.</p>
+        {% endif %}
+      </div>
+    </div>
+    </div>
+    <div class="text-center mt-10">
+    <a
+      href="{{ collections[section.settings.collection].url }}"
+      class="inline-block capitalize py-3 px-12 text-white bg-custom-pink hover:bg-[#a38cc9] rounded font-medium transition-all duration-700"
+      >Shop More</a
+    >
+    </div>
+  {% endif %}
+</div>
+
+
+
+
+
+
+
+
+
+{% schema %}
+{
+  "name": "Best Sellers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section Description",
+      "default": "Check out our best-selling products."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    },
+    {
+      "type": "range",
+      "id": "item_per_page",
+      "label": "Item Per Page",
+      "default": 8,
+      "min": 1,
+      "max": 20
+    },
+    {
+      "type": "select",
+      "id": "display_type",
+      "label": "Display Type",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "swiper",
+          "label": "Swiper"
+        }
+      ],
+      "default": "swiper"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Sellers",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

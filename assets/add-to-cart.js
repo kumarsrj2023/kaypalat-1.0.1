@@ -58,7 +58,6 @@ document.addEventListener('alpine:init', () => {
             .then(({ status, data }) => {
                 if (status === 200) {
                     this.updateCartCount();
-                    alert('Item added to cart!');
                 } else if (status === 422) {
                     alert(`Error: ${data.message}`);
                 } else {

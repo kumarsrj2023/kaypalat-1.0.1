@@ -1,15 +1,20 @@
 {
-    "sections": {
-      "template-homepage": {
-        "type": "template",
-        "blocks": {
-          "banner_section": {
-            "type": "banner_section"
-          }
-        },
-        "blocks_order": ["banner_section"]
+  "sections": {
+    "banner": {
+      "type": "homepage-banner"
+    },
+    "top_category": {
+      "type": "homepage-top-category"
+    },
+    "pillers_of_kayapalat": {
+      "type": "homepage-pillars-of-kayapalat"
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "top sellers"
       }
     },
-    "order": ["template-homepage"]
-  }
-  
+  },
+  "order": ["banner", "top_category", "pillers_of_kayapalat", "featured_collection"]
+}

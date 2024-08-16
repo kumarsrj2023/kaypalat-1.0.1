@@ -41,16 +41,16 @@
         </div>
 
         <div class="cart">
-        <button @click="$store.app.sidebar = true" class="relative flex flex-col items-center">
+          <button 
+            @click="$store.app.sidebar = true; $dispatch('refresh-cart')" 
+            class="relative flex flex-col items-center">
             {% render 'icon-cart', class: 'w-5 h-5 text-center hover:text-custom-skyblue transition-all duration-700' %}
-            <span class="block text-sm uppercase">
-              Cart
-            </span>
+            <span class="block text-sm uppercase"> Cart </span>
             <span class="cart-count bg-custom-pink font-medium text-white text-xs rounded-full w-5 h-5 leading-5 text-center absolute -top-1.5 -right-3.5 -translate-x-1/2 -translate-y-1/2 {% if cart.items.size > 0 %}inline-block{% else %}hidden{% endif %}">
-                {{ cart.item_count }}
-              </span>
+              {{ cart.item_count }}
+            </span>
           </button>
-        </div>
+        </div>                       
       </div>
     </div>
 

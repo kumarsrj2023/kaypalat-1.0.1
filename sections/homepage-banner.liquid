@@ -1,10 +1,83 @@
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
->
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<div class="banner-section">
+  <div class="banner-container">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          <div
+            class="!bg-cover flex items-center md:justify-start justify-center w-full bg-no-repeat h-screen"
+            style="background: url('{{ block.settings.background_image | img_url: 'master' }}');"
+          >
+            <div class="banner-content md:px-24 p-5 md:text-start text-center md:bg-transparent bg-white">
+              <div class="vendor-name">
+                <span>{{ block.settings.vendor_name }}</span>
+              </div>
+              <div>
+                <h2 class="md:text-6xl text-2xl font-semibold mb-4">{{ block.settings.heading }}</h2>
+              </div>
+              <div>
+                <a
+                  class="bg-[#9670b0] inline-block md:text-lg text-base font-semibold px-6 py-3 w-44 text-center text-white rounded"
+                  href="{{ block.settings.button_link }}"
+                >
+                  {{- block.settings.button_text -}}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "banner_slide",
+      "name": "Banner Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        },
+        {
+          "type": "text",
+          "id": "vendor_name",
+          "label": "Vendor Name",
+          "default": "Kayapalat"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "New aqua Cleanser"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link",
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
 
 
-
-hello this is homepage

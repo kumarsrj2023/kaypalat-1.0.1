@@ -1,0 +1,144 @@
+<div class="pillers-of-kaypalat overflow-hidden bg-[#FBF5ED] py-10 px-5">
+  <div class="mb-10 text-center">
+    <h2 class="text-26 font-semibold mb-2">{{ section.settings.title }}</h2>
+    <p class="text-sm font-normal">{{ section.settings.description }}</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {% for block in section.blocks %}
+      <div>
+        <div class="video-card" data-video-url="{{ block.settings.video_url }}">
+          <div class="video-thumbnail-wrapper relative border-4 border-custom-skyblue">
+            <img
+              src="{{ block.settings.thumbnail | img_url: 'medium' }}"
+              alt="{{ block.settings.title }}"
+              width="100%"
+              height="100%"
+              class="video-thumbnail"
+            >
+            <span class="absolute top-0 left-0 bottom-0 right-0 flex justify-center items-center play-btn cursor-pointer">
+              {% render 'icon-video-player' %}
+            </span>
+          </div>
+          <p class="text-lg font-semibold text-custom-skyblue text-center py-4">{{ block.settings.title }}</p>
+        </div>
+
+        <div
+          id="videoPopup"
+          class="video-popup hidden fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-[1000] bg-gray-900/50"
+        >
+          <div class="video-popup-content rounded-lg relative overflow-hidden w-[80vw] h-[80vh] bg-gray-700">
+            <span class="close absolute top-3 right-3 text-[2rem] text-white cursor-pointer">&times;</span>
+            <div id="popupPlayer" class="popup-player h-full w-full"></div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  var popupPlayer;
+  var videoPopup = document.getElementById('videoPopup');
+  var closeButton = document.querySelector('.video-popup .close');
+
+  function youtube_parser(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return match && match[7].length === 11 ? match[7] : false;
+  }
+
+  // Initialize YouTube API
+  function onYouTubeIframeAPIReady() {
+    // Add event listener for play buttons
+    var playButtons = document.querySelectorAll('.play-btn');
+
+    playButtons.forEach(function (button) {
+      var videoCard = button.closest('.video-card');
+      var videoUrl = videoCard.getAttribute('data-video-url');
+      var videoId = youtube_parser(videoUrl);
+
+      button.addEventListener('click', function () {
+        // Show the popup
+        videoPopup.classList.remove('hidden');
+
+        // Create and configure the YouTube player in the popup
+        if (!popupPlayer) {
+          popupPlayer = new YT.Player('popupPlayer', {
+            height: '100%',
+            width: '100%',
+            videoId: videoId,
+            playerVars: {
+              controls: 1,
+              autoplay: 1,
+              rel: 0,
+              showinfo: 0,
+            },
+          });
+        } else {
+          popupPlayer.loadVideoById(videoId);
+          popupPlayer.playVideo();
+        }
+      });
+    });
+
+    // Close the popup when the close button is clicked
+    closeButton.addEventListener('click', function () {
+      videoPopup.classList.add('hidden');
+      if (popupPlayer) {
+        popupPlayer.stopVideo();
+      }
+    });
+  }
+</script>
+
+
+{% schema %}
+{
+  "name": "Pillars Of Kayapalat",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Pillars Of Kayapalat"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section Description",
+      "default": "Naturopathy is the main base of KAYAPALAT Products. There are 3 Pillars of Kayapalat as below."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillars",
+      "name": "Pillar",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Thumbnail Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Pillar Title",
+          "default": "Mud Therapy"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pillars Of Kayapalat",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
