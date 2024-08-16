@@ -1,20 +1,40 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "sections": {
     "banner": {
-      "type": "homepage-banner"
+      "type": "homepage-banner",
+      "settings": {
+      }
     },
     "top_category": {
-      "type": "homepage-top-category"
+      "type": "homepage-top-category",
+      "settings": {
+      }
     },
     "pillers_of_kayapalat": {
-      "type": "homepage-pillars-of-kayapalat"
+      "type": "homepage-pillars-of-kayapalat",
+      "settings": {
+      }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
         "collection": "top sellers"
       }
-    },
+    }
   },
-  "order": ["banner", "top_category", "pillers_of_kayapalat", "featured_collection"]
+  "order": [
+    "banner",
+    "top_category",
+    "pillers_of_kayapalat",
+    "featured_collection"
+  ]
 }
