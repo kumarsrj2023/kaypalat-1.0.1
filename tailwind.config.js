@@ -11,6 +11,7 @@ module.exports = {
       colors: {
         "custom-green": "#1AA565",
         "custom-skyblue": "rgb(53, 164, 221)",
+        "custom-pink": "#9670B0",
       },
       fontSize: {
         "11": "11px",

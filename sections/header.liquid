@@ -39,9 +39,17 @@
           {% render 'icon-heart', class: 'w-5 h-5 text-center' %}
           <span class="block text-sm uppercase">Wishlist</span>
         </div>
-        <div class="all-account text-center flex flex-col items-center">
-          {% render 'icon-cart', class: 'w-5 h-5 text-center' %}
-          <span class="block text-sm uppercase">Cart</span>
+
+        <div class="cart">
+        <button @click="$store.app.sidebar = true" class="relative flex flex-col items-center">
+            {% render 'icon-cart', class: 'w-5 h-5 text-center hover:text-custom-skyblue transition-all duration-700' %}
+            <span class="block text-sm uppercase">
+              Cart
+            </span>
+            <span class="cart-count bg-custom-pink font-medium text-white text-xs rounded-full w-5 h-5 leading-5 text-center absolute -top-1.5 -right-3.5 -translate-x-1/2 -translate-y-1/2 {% if cart.items.size > 0 %}inline-block{% else %}hidden{% endif %}">
+                {{ cart.item_count }}
+              </span>
+          </button>
         </div>
       </div>
     </div>
@@ -77,6 +85,7 @@
             </button>
 
             <div
+              x-cloak
               @click.away="open = false"
               x-show="open"
               class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2"

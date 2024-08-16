@@ -1,8 +1,15 @@
 {
     "sections": {
-        "template": {
-            "type": "template-homepage"
-        }
+      "template-homepage": {
+        "type": "template",
+        "blocks": {
+          "banner_section": {
+            "type": "banner_section"
+          }
+        },
+        "blocks_order": ["banner_section"]
+      }
     },
-    "order": ["template"]
-}
+    "order": ["template-homepage"]
+  }
+  

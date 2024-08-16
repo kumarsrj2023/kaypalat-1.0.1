@@ -1,230 +1,344 @@
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
->
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+</style>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-
-<div class="banner-section">
-  <div class="swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div
-          class="!bg-cover flex items-center md:justify-start justify-center w-full bg-no-repeat h-screen"
-          style="background: url('{{ 'banner-bg.webp' | asset_url }}');"
-        >
-          <div class="banner-content md:px-24 p-5 md:text-start text-center md:bg-transparent bg-white">
-            <div class="vendor-name">
-              <span>Kayapalat</span>
-            </div>
-            <div>
-              <h2 class="md:text-6xl text-2xl font-semibold mb-4">New Aqua Cleanser</h2>
-            </div>
-            <div>
-              <a
-                class="bg-[#9670b0] inline-block md:text-lg text-base font-semibold px-6 py-3 w-44 text-center text-white rounded"
-                href=""
-                >Shop Now</a
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when 'banner_section' %}
+      <div class="banner-section">
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div
+                class="!bg-cover flex items-center md:justify-start justify-center w-full bg-no-repeat h-screen"
+                style="background: url('{{ 'banner-bg.webp' | asset_url }}');"
               >
+                <div class="banner-content md:px-24 p-5 md:text-start text-center md:bg-transparent bg-white">
+                  <div class="vendor-name">
+                    <span>Kayapalat</span>
+                  </div>
+                  <div>
+                    <h2 class="md:text-6xl text-2xl font-semibold mb-4">New Aqua Cleanser</h2>
+                  </div>
+                  <div>
+                    <a
+                      class="bg-[#9670b0] inline-block md:text-lg text-base font-semibold px-6 py-3 w-44 text-center text-white rounded"
+                      href=""
+                      >Shop Now</a
+                    >
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="swiper-slide">
-        <div
-          class="!bg-cover flex items-center md:justify-start justify-center w-full bg-no-repeat h-screen"
-          style="background: url('{{ 'banner-bg-2.webp' | asset_url }}');"
-        >
-          <div class="banner-content md:px-24 p-5 md:text-start text-center md:bg-transparent bg-white">
-            <div class="vendor-name">
-              <span>Kayapalat</span>
-            </div>
-            <div>
-              <h2 class="md:text-6xl text-2xl font-semibold mb-4">New Aqua Cleanser</h2>
-            </div>
-            <div>
-              <a
-                class="bg-[#9670b0] inline-block md:text-lg text-base font-semibold px-6 py-3 w-44 text-center text-white rounded"
-                href=""
-                >Shop Now</a
+            <div class="swiper-slide">
+              <div
+                class="!bg-cover flex items-center md:justify-start justify-center w-full bg-no-repeat h-screen"
+                style="background: url('{{ 'banner-bg-2.webp' | asset_url }}');"
               >
+                <div class="banner-content md:px-24 p-5 md:text-start text-center md:bg-transparent bg-white">
+                  <div class="vendor-name">
+                    <span>Kayapalat</span>
+                  </div>
+                  <div>
+                    <h2 class="md:text-6xl text-2xl font-semibold mb-4">New Aqua Cleanser</h2>
+                  </div>
+                  <div>
+                    <a
+                      class="bg-[#9670b0] inline-block md:text-lg text-base font-semibold px-6 py-3 w-44 text-center text-white rounded"
+                      href=""
+                      >Shop Now</a
+                    >
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    {% when 'top_category' %}
+      <div class="top-category overflow-hidden bg-[#FBF5ED] p-10">
+        <div class="mb-10">
+          <h2 class="text-center text-2xl font-semibold mb-10">Explore Top Categories</h2>
+        </div>
 
-<div class="top-category overflow-hidden bg-[#FBF5ED] p-10">
-  <div class="mb-10">
-    <h2 class="text-center text-2xl font-semibold mb-10">Explore Top Categories</h2>
-  </div>
+        <div class="swiper-top-category overflow-hidden">
+          <div class="swiper-wrapper">
+            {% for collection in collections %}
+              {% if collection.handle != 'frontpage' %}
+                <div class="swiper-slide">
+                  <div class="group collection-wrapper text-center overflow-hidden">
+                    {% if collection.featured_image != blank %}
+                      {% assign collection_image = collection.featured_image %}
+                    {% else %}
+                      {% assign collection_image = collection.products.first.image %}
+                    {% endif %}
 
-  <div class="swiper-top-category overflow-hidden">
-    <div class="swiper-wrapper">
-      {% for collection in collections %}
-        {% if collection.handle != 'frontpage' %}
-          <div class="swiper-slide">
-            <div class="group collection-wrapper text-center overflow-hidden">
-              {% if collection.featured_image != blank %}
-                {% assign collection_image = collection.featured_image %}
-              {% else %}
-                {% assign collection_image = collection.products.first.image %}
-              {% endif %}
-
-              <a class="inline-block" href="{{ collection.url }}">
-                <div class="w-40 h-40 mb-4 mx-auto overflow-hidden rounded-full">
-                  <img
-                    class="object-cover w-full h-full rounded-full transform transition-transform duration-1000 ease-in-out group-hover:scale-110"
-                    src="{{ collection_image | img_url: 'medium' }}"
-                    width=""
-                    height=""
-                  >
+                    <a class="inline-block" href="{{ collection.url }}">
+                      <div class="w-40 h-40 mb-4 mx-auto overflow-hidden rounded-full">
+                        <img
+                          class="object-cover w-full h-full rounded-full transform transition-transform duration-1000 ease-in-out group-hover:scale-110"
+                          src="{{ collection_image | img_url: 'medium' }}"
+                          width=""
+                          height=""
+                        >
+                      </div>
+                      <p class="text-base text-center font-medium">{{ collection.title }}</p>
+                    </a>
+                  </div>
                 </div>
-                <p class="text-base text-center font-medium">{{ collection.title }}</p>
-              </a>
-            </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-
-      <!-- Duplicate the slides for looping -->
-      {% for collection in collections %}
-        {% if collection.handle != 'frontpage' %}
-          <div class="swiper-slide">
-            <div class="group collection-wrapper text-center overflow-hidden">
-              {% if collection.featured_image != blank %}
-                {% assign collection_image = collection.featured_image %}
-              {% else %}
-                {% assign collection_image = collection.products.first.image %}
               {% endif %}
+            {% endfor %}
 
-              <a class="inline-block" href="{{ collection.url }}">
-                <div class="w-40 h-40 mb-4 mx-auto overflow-hidden rounded-full">
-                  <img
-                    class="object-cover w-full h-full rounded-full transform transition-transform duration-1000 ease-in-out group-hover:scale-110"
-                    src="{{ collection_image | img_url: 'medium' }}"
-                    width=""
-                    height=""
-                  >
+            <!-- Duplicate the slides for looping -->
+            {% for collection in collections %}
+              {% if collection.handle != 'frontpage' %}
+                <div class="swiper-slide">
+                  <div class="group collection-wrapper text-center overflow-hidden">
+                    {% if collection.featured_image != blank %}
+                      {% assign collection_image = collection.featured_image %}
+                    {% else %}
+                      {% assign collection_image = collection.products.first.image %}
+                    {% endif %}
+
+                    <a class="inline-block" href="{{ collection.url }}">
+                      <div class="w-40 h-40 mb-4 mx-auto overflow-hidden rounded-full">
+                        <img
+                          class="object-cover w-full h-full rounded-full transform transition-transform duration-1000 ease-in-out group-hover:scale-110"
+                          src="{{ collection_image | img_url: 'medium' }}"
+                          width=""
+                          height=""
+                        >
+                      </div>
+                      <p class="text-base text-center font-medium">{{ collection.title }}</p>
+                    </a>
+                  </div>
                 </div>
-                <p class="text-base text-center font-medium">{{ collection.title }}</p>
-              </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% when 'pillers_of_kayapalat' %}
+      <div class="pillers-of-kaypalat overflow-hidden bg-[#FBF5ED] py-10 px-5">
+        <div class="mb-10 text-center">
+          <h2 class="text-26 font-semibold mb-2">Pillars Of Kayapalat</h2>
+          <p class="text-sm font-normal">
+            Naturopathy is the main base of KAYAPALAT Products. <br>
+            There are 3 Pillars of Kayapalat are as below.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {% for i in (1..3) %}
+            <!-- Thumbnails and Popup Structure -->
+            <div>
+              <div class="video-card" data-video-url="https://youtu.be/HUsQEuqj4ek">
+                <div class="video-thumbnail-wrapper relative border-4 border-custom-skyblue">
+                  <img
+                    src="{{ 'mud-therapy.jpg' | asset_url }}"
+                    alt="Thumbnail"
+                    width="100%"
+                    height="100%"
+                    class="video-thumbnail"
+                  >
+                  <span class="absolute top-0 left-0 bottom-0 right-0 flex justify-center items-center play-btn cursor-pointer">
+                    {% render 'icon-video-player' %}
+                  </span>
+                </div>
+                <p class="text-lg font-semibold text-custom-skyblue text-center py-4">Mud Therapy</p>
+              </div>
+
+              <div
+                id="videoPopup"
+                class="video-popup hidden fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-[1000] bg-gray-900/50"
+              >
+                <div class="video-popup-content rounded-lg relative overflow-hidden w-[80vw] h-[80vh] bg-gray-700">
+                  <span class="close absolute top-3 right-3 text-[2rem] text-white cursor-pointer">&times;</span>
+                  <div id="popupPlayer" class="popup-player h-full w-full"></div>
+                </div>
+              </div>
             </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-</div>
+          {% endfor %}
+        </div>
+      </div>
 
-<div class="pillers-of-kaypalat overflow-hidden bg-[#FBF5ED] py-10 px-5">
-  <div class="mb-10 text-center">
-    <h2 class="text-26 font-semibold mb-2">Pillars Of Kayapalat</h2>
-    <p class="text-sm font-normal">
-      Naturopathy is the main base of KAYAPALAT Products. <br>
-      There are 3 Pillars of Kayapalat are as below.
-    </p>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {% for i in (1..3) %}
-      <!-- Thumbnails and Popup Structure -->
-      <div>
-        <div class="video-card" data-video-url="https://youtu.be/HUsQEuqj4ek">
-          <div class="video-thumbnail-wrapper relative border-4 border-custom-skyblue">
-            <img
-              src="{{ 'mud-therapy.jpg' | asset_url }}"
-              alt="Thumbnail"
-              width="100%"
-              height="100%"
-              class="video-thumbnail"
-            >
-            <span class="absolute top-0 left-0 bottom-0 right-0 flex justify-center items-center play-btn cursor-pointer">
-              {% render 'icon-video-player' %}
-            </span>
-          </div>
-          <p class="text-lg font-semibold text-custom-skyblue text-center py-4">Mud Therapy</p>
+    {% when 'best_sellers' %}
+      <div class="best-sellers overflow-hidden bg-[#FBF5ED] py-10 px-5">
+        <div class="mb-10 text-center">
+          <h2 class="text-26 font-semibold mb-2">{{ block.settings.title }}</h2>
+          <p class="text-sm font-normal">{{ block.settings.discription }}</p>
         </div>
 
         <div
-          id="videoPopup"
-          class="video-popup hidden fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-[1000] bg-gray-900/50"
+          x-data="{open: false, quantity: 1, selectedProduct: null }"
+          class="product-list grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-10"
         >
-          <div class="video-popup-content rounded-lg relative overflow-hidden w-[80vw] h-[80vh] bg-gray-700">
-            <span class="close absolute top-3 right-3 text-[2rem] text-white cursor-pointer">&times;</span>
-            <div id="popupPlayer" class="popup-player h-full w-full"></div>
-          </div>
+          {% for product in block.settings.featured_collection.products %}
+            {% render 'product-card', product: product %}
+          {% endfor %}
         </div>
-      </div>
-    {% endfor %}
-  </div>
-</div>
-
-<div class="best-sellers overflow-hidden bg-[#FBF5ED] py-10 px-5">
-  <div class="mb-10 text-center">
-    <h2 class="text-26 font-semibold mb-2">Best Sellers</h2>
-    <p class="text-sm font-normal">Found the best sellers of the KAYAPALAT</p>
-  </div>
-
-  <div class="product-list grid grid-cols-1 md:grid-cols-3">
-    {% for i in (1..8) %}
-      <div>
-        <div class="thumbnail h-96">
-          <img
-            class="h-full w-full object-cover"
-            src="{{ 'product1.png' | asset_url }}"
-            alt="Product Title"
-            width="100%"
-            height="100%"
+        <div class="text-center mt-10">
+          <a
+            href=""
+            class="inline-block capitalize py-3 px-12 text-white bg-custom-pink hover:bg-[#a38cc9] rounded font-medium transition-all duration-700"
+            >shop more</a
           >
         </div>
-
-        <div class="vendor">
-          <span class="capitalize text-">Kayapalat Care</span>
+      </div>
+    {% when 'beauty_care' %}
+      <div class="beauty-care overflow-hidden bg-[#FBF5ED] py-10 px-5">
+        <div class="mb-10 text-center">
+          <h2 class="text-26 font-semibold mb-2">Beauty Care</h2>
         </div>
 
-        <div class="product-title">
-          <span>Mud Face Wash</span>
-        </div>
+        <div
+          x-data="{ open: false, quantity: 1, selectedProduct: null }"
+          class="product-list relative overflow-hidden transition-all duration-700"
+        >
+          <!-- Swiper Container -->
+          <div class="swp-beauty-care">
+            <div class="swiper-wrapper">
+              {% for i in (1..8) %}
+                <div class="swiper-slide">
+                  <div class="group">
+                    <div class="thumbnail h-96 mb-3 relative overflow-hidden">
+                      <!-- Default Image -->
+                      <img
+                        class="absolute top-0 left-0 z-10 group-hover:z-0 h-full w-full object-cover opacity-100  group-hover:opacity-0 transition-opacity duration-700"
+                        src="{{ 'product1.png' | asset_url }}"
+                        alt="Product Title"
+                        width="100%"
+                        height="100%"
+                      >
 
-        <div class="price">
-          <span>{{ 19 | money }}</span>
+                      <!-- Hover Image -->
+                      <img
+                        class="absolute top-0 left-0 z-0 group-hover:z-10 h-full w-full object-cover transition-transform duration-700 transform scale-110 group-hover:scale-100"
+                        src="{{ 'product1-hover.png' | asset_url }}"
+                        alt="Product Title"
+                        width="100%"
+                        height="100%"
+                      >
+                      <div class="z-0 group-hover:z-10 flex py-2 px-5 absolute left-1/2 bottom-2 -translate-x-1/2 justify-center items-center text-center bg-white rounded-full gap-4 transition-transform duration-700 divide-x divide-solid">
+                        <span class="block w-4 h-4 mx-auto cursor-pointer">
+                          {% render 'icon-heart' %}
+                        </span>
+
+                        <span class="block w-4 h-4 mx-auto cursor-pointer">
+                          {% render 'icon-cart' %}
+                        </span>
+
+                        <span
+                          @click="open = true; selectedProduct = {{ forloop.index0 }};"
+                          class="block w-4 h-4 mx-auto cursor-pointer"
+                        >
+                          {% render 'icon-search', fill: '#ffffff' %}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="vendor mb-2">
+                      <span class="block capitalize text-[#555555] text-base text-center">Kayapalat Care</span>
+                    </div>
+
+                    <div class="product-title mb-2">
+                      <span class="block text-base font-medium text-center">Mud Face Wash</span>
+                    </div>
+
+                    <div class="price">
+                      <span class="block text-center text-15">{{ 1900 | money }}</span>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          {% comment %} Start model {% endcomment %}
+          <div
+            x-cloak
+            x-show="open"
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[99999]"
+          >
+            {% render 'model-product-view' %}
+          </div>
+          {% comment %} End model {% endcomment %}
         </div>
       </div>
-    {% endfor %}
-  </div>
-</div>
-
-<!-- Repeat for other videos -->
+    {% else %}
+      {% comment %} else case {% endcomment %}
+  {% endcase %}
+{% endfor %}
 
 <script>
-  const swiper = new Swiper('.swiper', {
-    direction: 'horizontal',
-    loop: true,
-    effect: 'fade',
-    fadeEffect: {
-      crossFade: true, // Optional: smooth fade between slides
-    },
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('products', () => ({}));
   });
+</script>
 
-  // swiper-top-category
+<script>
   document.addEventListener('DOMContentLoaded', function () {
-    const swiper = new Swiper('.swiper-top-category', {
+    const swiper = new Swiper('.swiper', {
+      direction: 'horizontal',
+      loop: true,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true, // Optional: smooth fade between slides
+      },
+    });
+
+    // swiper-top-category
+    const swiperTopCategory = new Swiper('.swiper-top-category', {
       slidesPerView: 6,
       spaceBetween: 10,
       loop: true,
-      mousewheel: true,
       autoplay: {
         delay: 3000,
       },
     });
+
+    {% comment %} product-quick-view {% endcomment %}
+    const productQuickView = new Swiper('.media-container', {
+      direction: 'horizontal',
+      slidesPerView: 1,
+      loop: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+
+    const swpBeautyCare = new Swiper('.swp-beauty-care', {
+      slidesPerView: 4, // Number of slides visible at once
+      spaceBetween: 20, // Space between slides in pixels
+      loop: true, // Optional: Enable looping
+      breakpoints: {
+        640: {
+          slidesPerView: 1,
+          spaceBetween: 10,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+        1280: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+        },
+      },
+    });
   });
 </script>
+
+
+
 
 <script>
   var popupPlayer;
@@ -280,3 +394,86 @@
     });
   }
 </script>
+
+{% schema %}
+{
+  "name": "Homepage Template",
+  "blocks": [
+    {
+      "type": "banner_section",
+      "name": "Banner Section",
+      "settings": []
+    },
+    {
+      "type": "top_category",
+      "name": "Top Category",
+      "settings": []
+    },
+    {
+      "type": "pillers_of_kayapalat",
+      "name": "Pillers Of Kayapalat",
+      "settings": []
+    },
+    {
+      "type": "best_sellers",
+      "name": "Best Sellers",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Title",
+          "default": "Best Sellers",
+          "id": "title"
+        },
+        {
+          "type": "textarea",
+          "label": "Discription",
+          "id": "discription"
+        },
+        {
+          "type": "collection",
+          "id": "featured_collection",
+          "label": "collection"
+        },
+        {
+          "type": "range",
+          "id": "item_per_page",
+          "label": "Item Per Page",
+          "default": 4,
+          "min": 1,
+          "max": 10
+        }
+      ]
+    },
+    {
+      "type": "beauty_care",
+      "name": "Beauty Care",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Title",
+          "default": "Best Sellers",
+          "id": "title"
+        },
+        {
+          "type": "textarea",
+          "label": "Discription",
+          "id": "discription"
+        },
+        {
+          "type": "collection",
+          "id": "featured_collection",
+          "label": "collection"
+        },
+        {
+          "type": "range",
+          "id": "item_per_page",
+          "label": "Item Per Page",
+          "default": 4,
+          "min": 1,
+          "max": 10
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

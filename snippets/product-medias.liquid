@@ -1,0 +1,13 @@
+{% case media.media_type %}
+    {% when 'image' %}
+      <img
+        class="w-full h-full object-contain"
+        src="{{ media | img_url: 'medium' }}"
+        alt="{{ media.image.alt }}"
+        width=""
+        height=""
+      >
+    {% else %}
+  
+  {% endcase %}
+  

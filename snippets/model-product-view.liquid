@@ -1,0 +1,128 @@
+{% if product.id %}
+  
+<script type="application/json" id="product-data-{{ product.id }}">
+  {{ product | json }}
+</script>
+
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[99999]">
+<div
+  x-data="cartHandler({{ product.id }})"
+  @click.away="open = false"
+  class="w-full md:max-w-screen-lg bg-white p-6 relative overflow-auto"
+>
+  <span @click="open = false" class="close absolute top-3 right-3 text-[2rem] text-gray-900 cursor-pointer"
+    >&times;</span
+  >
+  <form id="product-form" class="overflow-hidden relative" @submit.prevent="addToCart">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
+      <div class="media-container overflow-hidden sticky">
+        <div class="swiper-wrapper relative">
+          {% for media in product.media %}
+            <div class="swiper-slide">
+              <div class="product--media max-h-96 flex justify-center items-center">
+                {% render 'product-medias', media: media %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+
+      <div class="product-information overflow-y-auto">
+        <div>
+          <a class="text-[#333333] hover:text-custom-skyblue" href="">{{ product.vendor }}</a>
+        </div>
+
+        <div>
+          <h2 class="text-23 font-semibold mb-2.5">{{ product.title }}</h2>
+        </div>
+
+        <div class="mb-3">
+          <span class="text-base text-gray-500 line-through">{{ product.compare_at_price | money }}</span>
+          <span class="text-lg font-medium">{{ product.price | money }}</span>
+        </div>
+
+        {% unless product.has_only_default_variant %}
+          <variant-selector class="mb-3" data-url="{{ product.url}}" data-section="{{ section.id }}">
+            {% for option in product.options_with_values %}
+              <label for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
+
+              <div class="my-2">
+                <select
+                  name="options[{{ option.name | escape }}]"
+                  id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                  class="w-full border py-3 px-3"
+                  @change="selectedOptions[{{ forloop.index0 }}] = $event.target.value; updateVariantId()"
+                  x-init="$nextTick(() => selectedOptions[{{ forloop.index0 }}] = '{{ option.selected_value }}')"
+                >
+                  {% for value in option.values %}
+                    <option
+                      value="{{ value | escape }}"
+                      {% if option.selected_value == value %}
+                        selected="selected"
+                      {% endif %}
+                    >
+                      {{ value }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div> 
+            {% endfor %}
+          </variant-selector>
+        {% endunless %}
+
+        <div class="text-base mb-4">
+          {{ product.description }}
+        </div>
+
+        <div class="flex justify-between items-center mb-4">
+          <div class="flex items-center shadow border border-gray-100">
+            <span
+              @click="quantity > 1 ? quantity-- : quantity"
+              class="cursor-pointer text-xl flex justify-center items-center w-12 h-10"
+              >-</span
+            >
+            <input
+              disabled
+              class="text-xl flex justify-center items-center text-center w-12 h-10 border-l border-gray-100 border-r"
+              name="quantity"
+              type="text"
+              id="quantity"
+              min="1"
+              :value="quantity"
+            >
+            <span @click="quantity++" class="cursor-pointer text-xl flex justify-center items-center w-12 h-10">+</span>
+          </div>
+
+          <div class="transition-all duration-700">
+            <a href="" class="flex items-center hover:text-custom-skyblue">
+              <span class="w-4 h-4">
+                {% render 'icon-heart', class: 'w-full h-full' %}
+              </span>
+
+              <span class="ms-1 text-base">Add to Wishlist</span>
+            </a>
+          </div>
+        </div>
+
+        {% comment %} Add To Cart Button {% endcomment %}
+        <div>
+          <button
+            class="py-2 bg-custom-skyblue w-full text-center text-white font-normal capitalize rounded-md"
+            type="submit"
+            name="add"
+            class="button-primary"
+            id="add-to-cart"
+            data-product-id="{{ product.id }}"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+
+{% endif %}
