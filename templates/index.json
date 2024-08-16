@@ -99,6 +99,34 @@
     },
     "pillers_of_kayapalat": {
       "type": "homepage-pillars-of-kayapalat",
+      "blocks": {
+        "pillars_Twy6Ve": {
+          "type": "pillars",
+          "settings": {
+            "title": "Mud Therapy",
+            "video_url": ""
+          }
+        },
+        "pillars_kXYLGz": {
+          "type": "pillars",
+          "settings": {
+            "title": "Mud Therapy",
+            "video_url": ""
+          }
+        },
+        "pillars_c3KHUn": {
+          "type": "pillars",
+          "settings": {
+            "title": "Mud Therapy",
+            "video_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "pillars_Twy6Ve",
+        "pillars_kXYLGz",
+        "pillars_c3KHUn"
+      ],
       "settings": {
         "title": "Pillars Of Kayapalat",
         "description": "Naturopathy is the main base of KAYAPALAT Products. There are 3 Pillars of Kayapalat as below."
@@ -109,7 +137,7 @@
       "settings": {
         "title": "Best Sellers",
         "description": "Check out our best-selling products.",
-        "collection": "top sellers",
+        "collection": "top-sellers",
         "item_per_page": 8,
         "display_type": "swiper"
       }
