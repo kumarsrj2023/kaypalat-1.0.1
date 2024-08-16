@@ -139,7 +139,7 @@
         "description": "Check out our best-selling products.",
         "collection": "top-sellers",
         "item_per_page": 8,
-        "display_type": "swiper"
+        "display_type": "grid"
       }
     }
   },
