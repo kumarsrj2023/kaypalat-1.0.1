@@ -11,23 +11,107 @@
   "sections": {
     "banner": {
       "type": "homepage-banner",
+      "blocks": {
+        "banner_slide_w7nzrQ": {
+          "type": "banner_slide",
+          "settings": {
+            "vendor_name": "Kayapalat",
+            "heading": "New aqua Cleanser",
+            "button_text": "Shop now",
+            "button_link": ""
+          }
+        },
+        "banner_slide_FPk9E4": {
+          "type": "banner_slide",
+          "settings": {
+            "vendor_name": "Kayapalat",
+            "heading": "New aqua Cleanser",
+            "button_text": "Shop now",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "banner_slide_w7nzrQ",
+        "banner_slide_FPk9E4"
+      ],
       "settings": {
       }
     },
     "top_category": {
       "type": "homepage-top-category",
+      "blocks": {
+        "collection_9eEdMY": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "collection_HxJQH9": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "collection_BA7F7Y": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "collection_WM4fA4": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "collection_DaVtx4": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "collection_4GbEd3": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "collection_fjFJJT": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_9eEdMY",
+        "collection_HxJQH9",
+        "collection_BA7F7Y",
+        "collection_WM4fA4",
+        "collection_DaVtx4",
+        "collection_4GbEd3",
+        "collection_fjFJJT"
+      ],
       "settings": {
+        "title": "Explore Top Categories"
       }
     },
     "pillers_of_kayapalat": {
       "type": "homepage-pillars-of-kayapalat",
       "settings": {
+        "title": "Pillars Of Kayapalat",
+        "description": "Naturopathy is the main base of KAYAPALAT Products. There are 3 Pillars of Kayapalat as below."
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "collection": "top sellers"
+        "title": "Best Sellers",
+        "description": "Check out our best-selling products.",
+        "collection": "top sellers",
+        "item_per_page": 8,
+        "display_type": "swiper"
       }
     }
   },
